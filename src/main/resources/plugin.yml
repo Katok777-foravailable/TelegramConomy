@@ -1,0 +1,21 @@
+name: TelegramConomy
+version: '${project.version}'
+main: com.katok.telegramconomy.TelegramConomy
+api-version: '1.16'
+
+permissions:
+  telegramconomy.telegramconomy:
+    default: true
+
+commands:
+  telegramconomy:
+    aliases: tc
+    permission: telegramconomy.telegramconomy
+
+libraries:
+  - org.telegram:telegrambots-longpolling:8.0.0
+  - org.telegram:telegrambots-client:8.0.0
+  - org.reflections:reflections:0.10.2
+
+depend:
+  - Vault
