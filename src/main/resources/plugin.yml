@@ -15,7 +15,6 @@ commands:
 libraries:
   - org.telegram:telegrambots-longpolling:8.0.0
   - org.telegram:telegrambots-client:8.0.0
-  - org.reflections:reflections:0.10.2
 
 depend:
   - Vault
