@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
-import static com.katok.telegramconomy.TelegramConomy.logger;
-
 public class SQLDatabase {
     public Connection connection;
 

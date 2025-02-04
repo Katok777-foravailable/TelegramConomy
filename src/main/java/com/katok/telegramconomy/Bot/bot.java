@@ -11,7 +11,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.function.BiConsumer;
 
@@ -23,7 +22,7 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
 
     public List<Long> mute_users = new ArrayList<>();
     public HashMap<String, BiConsumer<Update, TelegramClient>> handlers = new HashMap<>();
-    private TelegramClient client;
+    private final TelegramClient client;
 
     public bot(String token) {
         this.token = token;

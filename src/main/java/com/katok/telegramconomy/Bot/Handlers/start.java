@@ -12,7 +12,6 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.MessageFormat;
 import java.util.UUID;
 
