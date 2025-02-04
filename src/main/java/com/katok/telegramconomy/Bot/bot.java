@@ -61,9 +61,7 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
         try {
             HandlerExample handler = handlerClass.newInstance();
             handlers.put(handler.getMessage(), handler::handler);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             throw new RuntimeException(e);
         }
     }

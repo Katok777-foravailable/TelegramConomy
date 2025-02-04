@@ -81,7 +81,7 @@ public class telegramconomy implements CommandExecutor {
                         }
 
                         String confirm_result = getString("minecraft.confirm.thisIDAlreadyTaken", message_cfg);
-                        Boolean can = true;
+                        boolean can = true;
 
                         try {
                             if(busy_id.next()) {

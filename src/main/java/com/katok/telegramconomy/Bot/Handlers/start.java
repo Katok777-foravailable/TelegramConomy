@@ -36,7 +36,7 @@ public class start implements HandlerExample {
         }
         String name_player;
         String balance;
-        OfflinePlayer player = null;
+        OfflinePlayer player;
 
         try {
             if (resultSet.isBeforeFirst()) {

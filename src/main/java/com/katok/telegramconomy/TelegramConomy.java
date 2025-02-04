@@ -42,6 +42,7 @@ public final class TelegramConomy extends JavaPlugin {
         if (vault_class == null) {
             logger.severe("Не удалось загрузить экономику!");
             getServer().getPluginManager().disablePlugin(this);
+            return;
         }
         economy = vault_class.getProvider();
 

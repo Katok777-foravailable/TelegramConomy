@@ -30,9 +30,7 @@ public class SQLDatabase {
             PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + main_table + " (" + telegram_id + " INTEGER, " + uuid +" TEXT);");
             statement.executeUpdate();
             statement.close();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
