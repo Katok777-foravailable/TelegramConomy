@@ -1,3 +1,16 @@
 telegram:
-
+  yourId: "Ваш айди: {0}"
+  startmessage: "Привязанный аккаунт: {0}\nКоличество денег: {1}"
+  absence: "отсутствует"
 minecraft:
+  link:
+    Doyoulinked: "&#e6bd49Состояние вашего аккаунта: {0}"
+    linked: "&#00FF00привязано"
+    notlinked: "&#FF0000не привязано"
+  confirm:
+    youMustWriteID: "&#FF0000Вам нужно ввести ваше Telegram ID"
+    youSuccessfulLinked: "&#00FF00Вы успешно добавили Telegram ID"
+    thisIDAlreadyTaken: "&#FF0000Этот айди уже взят кем-то"
+  other:
+    cantWriteFromConsole: "&#FF0000Эту команду нельзя использовать с консоли!"
+    notEnoughArguments: "&#FF0000Недостаточно аргументов"

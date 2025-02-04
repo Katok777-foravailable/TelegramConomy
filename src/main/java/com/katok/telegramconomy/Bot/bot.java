@@ -1,5 +1,6 @@
 package com.katok.telegramconomy.Bot;
 
+import com.katok.telegramconomy.Bot.Handlers.getid;
 import com.katok.telegramconomy.Bot.Handlers.start;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -13,7 +14,6 @@ import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 import static com.katok.telegramconomy.TelegramConomy.*;
 
@@ -30,7 +30,9 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
         this.cooldown = config.getInt("antispam_cooldown");
         this.client = new OkHttpTelegramClient(token);
 
+        // загружаем модули
         load_module(start.class);
+        load_module(getid.class);
     }
 
     @Override
@@ -47,16 +49,6 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
                 mute_users.remove(update.getMessage().getChatId());
             }
         }, 20L * cooldown);
-
-        if(!telegram_cfg.contains("accounts." + update.getMessage().getChatId())) {
-            telegram_cfg.set("accounts." + update.getMessage().getChatId(), "");
-
-            try {
-                telegram_cfg.save(telegram_file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
         for(String message: handlers.keySet()) {
             if(update.getMessage().getText().startsWith(message)) {

@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.logging.Logger;
 
+import static com.katok.telegramconomy.Bot.bot.unload;
 import static com.katok.telegramconomy.utils.ConfigUtil.getString;
 
 public final class TelegramConomy extends JavaPlugin {
@@ -22,8 +23,9 @@ public final class TelegramConomy extends JavaPlugin {
     public static YamlConfiguration message_cfg;
     public static File message_file;
 
-    public static YamlConfiguration telegram_cfg;
-    public static File telegram_file;
+    public static SQLDatabase database;
+
+    public static String token;
 
     @Override
     public void onEnable() {
@@ -31,6 +33,9 @@ public final class TelegramConomy extends JavaPlugin {
         logger = getLogger();
 
         load_configs();
+
+        // SQL
+        database = new SQLDatabase(instance.getDataFolder());
 
         // economy
         RegisteredServiceProvider<Economy> vault_class = instance.getServer().getServicesManager().getRegistration(Economy.class);
@@ -41,11 +46,16 @@ public final class TelegramConomy extends JavaPlugin {
         economy = vault_class.getProvider();
 
         // telegram
-        final String token = getString("token");
+        token = getString("token");
         if(!bot.load(token)) getServer().getPluginManager().disablePlugin(this);
 
         // команды
         getCommand("telegramconomy").setExecutor(new telegramconomy());
+    }
+
+    @Override
+    public void onDisable() {
+        unload(token);
     }
 
     public void load_configs() {
@@ -59,17 +69,6 @@ public final class TelegramConomy extends JavaPlugin {
 
         try {
             message_cfg.load(message_file);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        telegram_cfg = new YamlConfiguration();
-        telegram_file = new File(instance.getDataFolder(), "telegram.yml");
-
-        if(!telegram_file.exists()) instance.saveResource("telegram.yml", false);
-
-        try {
-            telegram_cfg.load(telegram_file);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
