@@ -6,18 +6,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.List;
 
 import static com.katok.telegramconomy.TelegramConomy.*;
 import static com.katok.telegramconomy.utils.ConfigUtil.getString;
 
-public class telegramconomy implements CommandExecutor {
+public class telegramconomy implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if(!(sender instanceof Player player)) {
@@ -107,7 +110,45 @@ public class telegramconomy implements CommandExecutor {
                     }
                 });
                 break;
+            case("unlink"):
+                Bukkit.getScheduler().runTaskAsynchronously(instance, new Runnable() {
+                    @Override
+                    public void run() {
+                        PreparedStatement existed_in_another_accounts_statement = database.select(SQLDatabase.getTelegram_id(), SQLDatabase.getUuid(), player.getUniqueId().toString());
+                        ResultSet existed_in_another_accounts;
+
+                        try {
+                            existed_in_another_accounts = existed_in_another_accounts_statement.executeQuery();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        String confirm_result = getString("minecraft.unlink.notSuccessful", message_cfg);
+
+                        try {
+                            if(existed_in_another_accounts.next()) {
+                                database.drop_by_uuid(player.getUniqueId().toString());
+                                confirm_result = getString("minecraft.unlink.successful", message_cfg);
+                            }
+
+                            existed_in_another_accounts.close();
+                            existed_in_another_accounts_statement.close();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        player.sendMessage(confirm_result);
+                    }
+                });
+                break;
         }
         return true;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if(strings.length <= 1) {
+            return List.of("confirm", "unlink");
+        }
+        return List.of();
     }
 }

@@ -1,7 +1,6 @@
 package com.katok.telegramconomy.Bot;
 
-import com.katok.telegramconomy.Bot.Handlers.getid;
-import com.katok.telegramconomy.Bot.Handlers.start;
+import com.katok.telegramconomy.Bot.Handlers.*;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.telegram.telegrambots.longpolling.TelegramBotsLongPollingApplication;
@@ -32,6 +31,9 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
         // загружаем модули
         load_module(start.class);
         load_module(getid.class);
+        load_module(unlink.class);
+        load_module(help.class);
+        load_module(check.class);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
     }
 
     public static Boolean load(String token) {
-        if(StringUtils.isEmpty(token)) {
+        if(StringUtils.isEmpty(token) || StringUtils.isEmpty(bot_name)) {
             logger.severe("Пожалуйста, заполните данные о боте в конфиге");
             return false;
         }

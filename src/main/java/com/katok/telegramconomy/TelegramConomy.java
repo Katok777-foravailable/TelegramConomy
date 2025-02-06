@@ -23,9 +23,13 @@ public final class TelegramConomy extends JavaPlugin {
     public static YamlConfiguration message_cfg;
     public static File message_file;
 
+    public static YamlConfiguration telegram_cfg;
+    public static File telegram_file;
+
     public static SQLDatabase database;
 
     public static String token;
+    public static String bot_name;
 
     @Override
     public void onEnable() {
@@ -48,6 +52,7 @@ public final class TelegramConomy extends JavaPlugin {
 
         // telegram
         token = getString("token");
+        bot_name = getString("username");
         if(!bot.load(token)) getServer().getPluginManager().disablePlugin(this);
 
         // команды
@@ -70,6 +75,17 @@ public final class TelegramConomy extends JavaPlugin {
 
         try {
             message_cfg.load(message_file);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        telegram_cfg = new YamlConfiguration();
+        telegram_file = new File(instance.getDataFolder(), "telegram.yml");
+
+        if(!telegram_file.exists()) instance.saveResource("telegram.yml", false);
+
+        try {
+            telegram_cfg.load(telegram_file);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

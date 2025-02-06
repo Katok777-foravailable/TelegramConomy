@@ -4,20 +4,17 @@ import com.katok.telegramconomy.Bot.HandlerExample;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 
-import java.text.MessageFormat;
-
 import static com.katok.telegramconomy.TelegramConomy.message_cfg;
 import static com.katok.telegramconomy.utils.ConfigUtil.getString;
 
-public class getid implements HandlerExample {
+public class help implements HandlerExample {
     @Override
     public String getMessage() {
-        return "/getid";
+        return "/help";
     }
 
     @Override
     public void handler(Update update, TelegramClient client) {
-        HandlerExample.sendMessage(update, client, MessageFormat.format(getString("telegram.yourId", message_cfg), String.valueOf(update.getMessage().getChatId())));
-//        HandlerExample.sendMessage(update, client, MessageFormat.format(getString("telegram.yourId", message_cfg), String.valueOf(update.getMessage().getChatId())));
+        HandlerExample.sendMessage(update, client, getString("telegram.help", message_cfg));
     }
 }
