@@ -34,6 +34,7 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
         load_module(unlink.class);
         load_module(help.class);
         load_module(check.class);
+        load_module(transfer.class);
     }
 
     @Override

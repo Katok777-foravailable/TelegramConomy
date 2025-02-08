@@ -28,7 +28,7 @@ public class check implements HandlerExample {
     public void handler(Update update, TelegramClient client) {
         String[] strings = update.getMessage().getText().split(" ");
         if(strings.length < 2 || !StringUtils.isNumeric(strings[1]) || strings[1].length() > 6) {
-            HandlerExample.sendMessage(update, client, getString("telegram.check.notEnoughArguments", message_cfg));
+            HandlerExample.sendMessage(update, client, getString("telegram.examples.notEnoughArguments", message_cfg) + getString("telegram.check.example", message_cfg));
             return;
         }
         int cash = Integer.parseInt(strings[1]);
@@ -54,7 +54,7 @@ public class check implements HandlerExample {
         }
 
         if(economy.getBalance(player) < cash) {
-            HandlerExample.sendMessage(update, client, getString("telegram.check.notEnoughMoney", message_cfg));
+            HandlerExample.sendMessage(update, client, getString("telegram.notEnoughMoney", message_cfg));
             return;
         }
 
